@@ -2,7 +2,9 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:quansa_homework/domain/model/todo_item.dart';
 import 'package:quansa_homework/extension/dialog_extension.dart';
+import 'package:quansa_homework/extension/dialogs/delete_todo_dialog.dart';
 import 'package:quansa_homework/extension/dialogs/todo_dialog.dart';
 import 'package:quansa_homework/pages/home_effect.dart';
 import 'package:quansa_homework/pages/home_view_model.dart';
@@ -30,14 +32,36 @@ class HomeViewBody extends StatefulWidget {
 
 class _HomeViewBodyState extends State<HomeViewBody> {
   late StreamSubscription<HomeEffect> _effectSubscription;
+  final TextEditingController titleCtrl = TextEditingController();
+  final TextEditingController descriptionCtrl = TextEditingController();
 
   @override
   void initState() {
     HomeViewModel viewModel = context.read<HomeViewModel>();
+
+    /// Se escuchan los efectos añadidos desde el viewmodel, aqui se muestran
+    /// los dialogs
     _effectSubscription = viewModel.effects.listen(
       (HomeEffect event) async {
         if (event is ShowDialogCreateTodo) {
-          DialogExtension().build(context, TodoDialog(viewModel));
+          DialogExtension().build(
+            context,
+            TodoDialog(
+              titleCtrl: titleCtrl,
+              descriptionCtrl: descriptionCtrl,
+              onTakePicture: viewModel.takePicture,
+              onCreateTodo: viewModel.createTodo,
+              validateEmptyForm: viewModel.validateEmptyForm,
+            ),
+          );
+        } else if (event is ShowDialogDeleteTodo) {
+          DialogExtension().build(
+            context,
+            DeleteTodoDialog(
+              todoId: event.todoId,
+              onDeleteTodo: viewModel.removeTodo,
+            ),
+          );
         }
       },
     );
@@ -47,6 +71,8 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   void dispose() {
     _effectSubscription.cancel();
+    titleCtrl.dispose();
+    descriptionCtrl.dispose();
     super.dispose();
   }
 
@@ -55,7 +81,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
     final HomeViewModel viewModel = context.watch<HomeViewModel>();
 
     return Scaffold(
-      appBar: AppbarWidget(onPressed: viewModel.onClickAddTodo),
+      appBar: AppbarWidget(onPressed: viewModel.showDialogCreateTodo),
       body: ListView.separated(
         padding: const EdgeInsets.symmetric(vertical: 15),
         physics: const AlwaysScrollableScrollPhysics(
@@ -66,9 +92,10 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           return const Divider(height: 15);
         },
         itemBuilder: (BuildContext context, int index) {
+          TodoItem todo = viewModel.status.todoItems[index];
           return TodoItemWidget(
-            todoItem: viewModel.status.todoItems[index],
-            onDelete: () {},
+            todoItem: todo,
+            onDelete: () => viewModel.showDialogDeleteTodo(todo.id),
           );
         },
       ),

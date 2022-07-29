@@ -5,3 +5,8 @@ abstract class HomeEffect extends Effect {}
 class ShowDialogCreateTodo extends HomeEffect {
   ShowDialogCreateTodo();
 }
+
+class ShowDialogDeleteTodo extends HomeEffect {
+  final String todoId;
+  ShowDialogDeleteTodo(this.todoId);
+}
