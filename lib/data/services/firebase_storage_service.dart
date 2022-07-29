@@ -1,20 +1,23 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
-
-class StorageService {
-  Future uploadFile(File photo, String todoId) async {
-    return;
-  }
-
-  Future getFile() async {
-    return;
-  }
-}
+import 'package:quansa_homework/data/services/storage_service.dart';
+import 'package:quansa_homework/firebase_options.dart';
 
 class FirebaseStorageService implements StorageService {
+  static FirebaseStorageService _instance = FirebaseStorageService();
   final firebase_storage.FirebaseStorage storage =
       firebase_storage.FirebaseStorage.instance;
+
+  @override
+  Future<FirebaseStorageService> initializeService() async {
+    _instance = FirebaseStorageService();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    return _instance;
+  }
 
   @override
   Future uploadFile(File photo, String todoId) async {
@@ -26,20 +29,21 @@ class FirebaseStorageService implements StorageService {
           .child(todoId);
       await ref.putFile(photo);
     } catch (e) {
-      print('error occured');
+      print('error occured uploading file');
       return null;
     }
   }
 
   @override
-  Future getFile() async {
+  Future getFile(String todoId) async {
     try {
       String downloadUrl = await firebase_storage.FirebaseStorage.instance
           .ref()
-          .child('todosImages/')
+          .child('todosImages/$todoId.jpeg')
           .getDownloadURL();
       return downloadUrl;
     } catch (e) {
+      print('error occured reading file');
       return null;
     }
   }

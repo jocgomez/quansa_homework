@@ -10,7 +10,7 @@ class TodoDialog extends DialogBuilder {
   final TextEditingController titleCtrl;
   final TextEditingController descriptionCtrl;
   final Future<XFile?> Function() onTakePicture;
-  final Function(TodoItem, File?) onCreateTodo;
+  final Future<void> Function(TodoItem, File?) onCreateTodo;
   final String? Function(String?) validateEmptyForm;
 
   TodoDialog({

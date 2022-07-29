@@ -1,13 +1,11 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:quansa_homework/firebase_options.dart';
+import 'package:quansa_homework/data/get_it_locator.dart';
 import 'package:quansa_homework/pages/home_view.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+
+  Locator.setUpLocator();
   runApp(const MyApp());
 }
 
