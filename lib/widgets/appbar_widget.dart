@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 
 class AppbarWidget extends StatelessWidget with PreferredSizeWidget {
-  const AppbarWidget({Key? key}) : super(key: key);
+  final VoidCallback onPressed;
+  const AppbarWidget({Key? key, required this.onPressed}) : super(key: key);
 
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
@@ -14,9 +15,7 @@ class AppbarWidget extends StatelessWidget with PreferredSizeWidget {
         IconButton(
           splashRadius: 20,
           icon: const Icon(Icons.add),
-          onPressed: () {
-            // TODO: Create dialog to create todo item.
-          },
+          onPressed: onPressed,
         ),
       ],
     );
