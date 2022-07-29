@@ -7,8 +7,7 @@ import 'package:quansa_homework/firebase_options.dart';
 
 class FirebaseStorageService implements StorageService {
   static FirebaseStorageService _instance = FirebaseStorageService();
-  final firebase_storage.FirebaseStorage storage =
-      firebase_storage.FirebaseStorage.instance;
+  static firebase_storage.FirebaseStorage? storage;
 
   @override
   Future<FirebaseStorageService> initializeService() async {
@@ -16,11 +15,14 @@ class FirebaseStorageService implements StorageService {
     await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform,
     );
+    storage = firebase_storage.FirebaseStorage.instance;
     return _instance;
   }
 
+  /// Se define la ruta donde se guardaran las fotos
+  /// Se guarda y se obtiene la url de la foto almacenada
   @override
-  Future uploadFile(File photo, String todoId) async {
+  Future<String?> uploadFile(File photo, String todoId) async {
     const String destination = 'todosImages/';
 
     try {
@@ -28,22 +30,9 @@ class FirebaseStorageService implements StorageService {
           .ref(destination)
           .child(todoId);
       await ref.putFile(photo);
+      return await ref.getDownloadURL();
     } catch (e) {
       print('error occured uploading file');
-      return null;
-    }
-  }
-
-  @override
-  Future getFile(String todoId) async {
-    try {
-      String downloadUrl = await firebase_storage.FirebaseStorage.instance
-          .ref()
-          .child('todosImages/$todoId.jpeg')
-          .getDownloadURL();
-      return downloadUrl;
-    } catch (e) {
-      print('error occured reading file');
       return null;
     }
   }

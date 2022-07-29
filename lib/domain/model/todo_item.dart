@@ -19,4 +19,18 @@ class TodoItem {
       _$TodoItemFromJson(json);
 
   Map<String, dynamic> toJson() => _$TodoItemToJson(this);
+
+  TodoItem copyWith({
+    String? title,
+    String? description,
+    String? photoUrl,
+    bool? isDone,
+  }) {
+    return TodoItem(
+      title: title ?? this.title,
+      description: description ?? this.description,
+      photoUrl: photoUrl ?? this.photoUrl,
+      isDone: isDone ?? this.isDone,
+    );
+  }
 }

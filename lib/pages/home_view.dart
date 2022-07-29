@@ -11,6 +11,7 @@ import 'package:quansa_homework/pages/home_effect.dart';
 import 'package:quansa_homework/pages/home_view_model.dart';
 import 'package:quansa_homework/widgets/appbar_widget.dart';
 import 'package:quansa_homework/widgets/todo_item_widget.dart';
+import 'package:quansa_homework/data/services/storage_service.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeViewModel>(
-      create: (_) => HomeViewModel(locator()),
+      create: (_) => HomeViewModel(locator<StorageService>()),
       child: const HomeViewBody(),
     );
   }
@@ -39,6 +40,9 @@ class _HomeViewBodyState extends State<HomeViewBody> {
   @override
   void initState() {
     HomeViewModel viewModel = context.read<HomeViewModel>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      viewModel.onInit();
+    });
 
     /// Se escuchan los efectos añadidos desde el viewmodel, aqui se muestran
     /// los dialogs

@@ -6,6 +6,8 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
   Locator.setUpLocator();
+  await locator.allReady();
+
   runApp(const MyApp());
 }
 

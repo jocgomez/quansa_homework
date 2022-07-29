@@ -48,8 +48,10 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
   }
 
   Future<void> createTodo(TodoItem todoItem, File? photo) async {
+    String? photoUrl;
     if (photo != null) {
-      await _storageService.uploadFile(photo, todoItem.id);
+      photoUrl = await _storageService.uploadFile(photo, todoItem.id);
+      todoItem = todoItem.copyWith(photoUrl: photoUrl);
     }
 
     status = status.copyWith(
