@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
+import 'package:flutter/material.dart';
 import 'package:quansa_homework/data/services/storage_service.dart';
 import 'package:quansa_homework/firebase_options.dart';
 
@@ -32,8 +33,14 @@ class FirebaseStorageService implements StorageService {
       await ref.putFile(photo);
       return await ref.getDownloadURL();
     } catch (e) {
-      print('error occured uploading file');
+      debugPrint('Error al subir la foto: $e');
       return null;
     }
+  }
+
+  /// Remueve la foto del storage a partir de la url
+  @override
+  Future removeFile(String photoUrl) async {
+    firebase_storage.FirebaseStorage.instance.refFromURL(photoUrl).delete();
   }
 }

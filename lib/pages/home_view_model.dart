@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:quansa_homework/data/services/storage_service.dart';
 import 'package:quansa_homework/domain/model/todo_item.dart';
@@ -42,7 +43,7 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
       final image = await ImagePicker().pickImage(source: ImageSource.camera);
       return image;
     } catch (e) {
-      print(e);
+      debugPrint('Error al tomar la foto: $e');
     }
     return null;
   }
@@ -62,7 +63,10 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
     );
   }
 
-  void removeTodo(String id) {
+  Future<void> removeTodo(String id) async {
+    await _storageService.removeFile(
+      status.todoItems.firstWhere((todo) => todo.id == id).photoUrl,
+    );
     status = status.copyWith(
       todoItems: status.todoItems.where((item) => item.id != id).toList(),
     );
