@@ -10,7 +10,7 @@ class TodoDialog extends DialogBuilder {
   final TextEditingController titleCtrl;
   final TextEditingController descriptionCtrl;
   final Future<XFile?> Function() onTakePicture;
-  final Future<void> Function(TodoItem, File?) onCreateTodo;
+  final Future<void> Function(BuildContext, TodoItem, File?) onCreateTodo;
   final String? Function(String?) validateEmptyForm;
 
   TodoDialog({
@@ -114,6 +114,7 @@ class TodoDialog extends DialogBuilder {
               if (keyForm.currentState?.validate() ?? false) {
                 Navigator.of(context).pop();
                 onCreateTodo(
+                  context,
                   TodoItem(
                     title: titleCtrl.text,
                     description: descriptionCtrl.text,

@@ -6,12 +6,14 @@ import 'package:quansa_homework/data/get_it_locator.dart';
 import 'package:quansa_homework/domain/model/todo_item.dart';
 import 'package:quansa_homework/extension/dialog_extension.dart';
 import 'package:quansa_homework/extension/dialogs/delete_todo_dialog.dart';
+import 'package:quansa_homework/extension/dialogs/loading_dialog.dart';
 import 'package:quansa_homework/extension/dialogs/todo_dialog.dart';
 import 'package:quansa_homework/pages/home_effect.dart';
 import 'package:quansa_homework/pages/home_view_model.dart';
 import 'package:quansa_homework/widgets/appbar_widget.dart';
 import 'package:quansa_homework/widgets/todo_item_widget.dart';
 import 'package:quansa_homework/data/services/storage_service.dart';
+import 'package:quansa_homework/data/services/local_storage_service.dart';
 
 class HomeView extends StatelessWidget {
   const HomeView({Key? key}) : super(key: key);
@@ -19,7 +21,10 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeViewModel>(
-      create: (_) => HomeViewModel(locator<StorageService>()),
+      create: (_) => HomeViewModel(
+        locator<StorageService>(),
+        locator<LocalStorageService>(),
+      ),
       child: const HomeViewBody(),
     );
   }
@@ -67,6 +72,13 @@ class _HomeViewBodyState extends State<HomeViewBody> {
               onDeleteTodo: viewModel.removeTodo,
             ),
           );
+        } else if (event is ShowDialogLoading) {
+          DialogExtension().build(
+            context,
+            LoadingDialog(),
+          );
+        } else if (event is CloseDialog) {
+          DialogExtension().dispose(context);
         }
       },
     );

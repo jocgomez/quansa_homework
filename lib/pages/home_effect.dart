@@ -10,3 +10,11 @@ class ShowDialogDeleteTodo extends HomeEffect {
   final String todoId;
   ShowDialogDeleteTodo(this.todoId);
 }
+
+class ShowDialogLoading extends HomeEffect {
+  ShowDialogLoading();
+}
+
+class CloseDialog extends HomeEffect {
+  CloseDialog();
+}
