@@ -9,9 +9,10 @@ class AppbarWidget extends StatelessWidget with PreferredSizeWidget {
   @override
   Widget build(BuildContext context) {
     return AppBar(
-      title: const Text('Todo List'),
+      title: const Text('Lista de tareas'),
       actions: [
         IconButton(
+          splashRadius: 20,
           icon: const Icon(Icons.add),
           onPressed: () {
             // TODO: Create dialog to create todo item.
