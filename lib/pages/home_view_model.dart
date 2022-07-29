@@ -1,12 +1,18 @@
+import 'dart:io';
+
 import 'package:image_picker/image_picker.dart';
 import 'package:quansa_homework/domain/model/todo_item.dart';
 import 'package:quansa_homework/pages/home_effect.dart';
 import 'package:quansa_homework/pages/home_status.dart';
+import 'package:quansa_homework/services/firebase_storage_service.dart';
 import 'package:quansa_homework/view_model.dart';
 
 class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
-  HomeViewModel() {
+  final StorageService _storageService;
+
+  HomeViewModel(this._storageService) {
     status = HomeStatus(
+      isImageUploading: false,
       todoItems: [
         TodoItem(
           title: 'Todo 1',
@@ -72,7 +78,12 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
     return null;
   }
 
-  void createTodo(TodoItem todoItem) {
+  Future<void> createTodo(TodoItem todoItem, File? photo) async {
+    status = status.copyWith(isImageUploading: true);
+    if (photo != null) {
+      await _storageService.uploadFile(photo, todoItem.id);
+    }
+
     status = status.copyWith(
       todoItems: [
         ...status.todoItems,

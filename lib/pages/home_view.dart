@@ -8,6 +8,7 @@ import 'package:quansa_homework/extension/dialogs/delete_todo_dialog.dart';
 import 'package:quansa_homework/extension/dialogs/todo_dialog.dart';
 import 'package:quansa_homework/pages/home_effect.dart';
 import 'package:quansa_homework/pages/home_view_model.dart';
+import 'package:quansa_homework/services/firebase_storage_service.dart';
 import 'package:quansa_homework/widgets/appbar_widget.dart';
 import 'package:quansa_homework/widgets/todo_item_widget.dart';
 
@@ -17,7 +18,7 @@ class HomeView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeViewModel>(
-      create: (_) => HomeViewModel(),
+      create: (_) => HomeViewModel(FirebaseStorageService()),
       child: const HomeViewBody(),
     );
   }

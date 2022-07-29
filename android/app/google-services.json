@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "230963919991",
+    "project_id": "quansa-homework",
+    "storage_bucket": "quansa-homework.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230963919991:android:5bfab93795a89762f3da72",
+        "android_client_info": {
+          "package_name": "com.example.quansa_homework"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230963919991-iuf6clmkd5brpu9nlaqm92185pp8isht.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARRVM0QbDsmipqvzyiUw8dLfuibNeA7lw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230963919991-iuf6clmkd5brpu9nlaqm92185pp8isht.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

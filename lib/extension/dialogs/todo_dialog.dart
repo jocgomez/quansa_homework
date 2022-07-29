@@ -10,7 +10,7 @@ class TodoDialog extends DialogBuilder {
   final TextEditingController titleCtrl;
   final TextEditingController descriptionCtrl;
   final Future<XFile?> Function() onTakePicture;
-  final Function(TodoItem) onCreateTodo;
+  final Function(TodoItem, File?) onCreateTodo;
   final String? Function(String?) validateEmptyForm;
 
   TodoDialog({
@@ -120,6 +120,7 @@ class TodoDialog extends DialogBuilder {
                     photoUrl: photo?.path ?? AssetManager.todoDefault,
                     isDone: isDone,
                   ),
+                  photo != null ? File(photo!.path) : null,
                 );
                 titleCtrl.clear();
                 descriptionCtrl.clear();
