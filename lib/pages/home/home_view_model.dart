@@ -6,8 +6,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:quansa_homework/data/services/local_storage_service.dart';
 import 'package:quansa_homework/data/services/storage_service.dart';
 import 'package:quansa_homework/domain/model/todo_item.dart';
-import 'package:quansa_homework/pages/home_effect.dart';
-import 'package:quansa_homework/pages/home_status.dart';
+import 'package:quansa_homework/pages/home/home_effect.dart';
+import 'package:quansa_homework/pages/home/home_status.dart';
 import 'package:quansa_homework/view_model.dart';
 
 class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
@@ -22,12 +22,15 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
     /// Get the todos from local storage then are converted to List<TodoItem>
     final String? todoItemsString =
         _localStorage.getPreferences()?.getString('todos');
-    final List<dynamic> todoItemsMap = json.decode(todoItemsString ?? '');
 
-    final List<TodoItem> todoItems =
-        todoItemsMap.map((dynamic item) => TodoItem.fromJson(item)).toList();
+    if (todoItemsString != null) {
+      final List<dynamic> todoItemsMap = json.decode(todoItemsString);
 
-    status = status.copyWith(todoItems: todoItems);
+      final List<TodoItem> todoItems =
+          todoItemsMap.map((dynamic item) => TodoItem.fromJson(item)).toList();
+
+      status = status.copyWith(todoItems: todoItems);
+    }
   }
 
   /// Validación para textfields vacios

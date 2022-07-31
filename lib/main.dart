@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:quansa_homework/data/get_it_locator.dart';
-import 'package:quansa_homework/pages/home_view.dart';
+import 'package:quansa_homework/resources/routes_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,7 +22,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.deepOrange,
       ),
-      home: const HomeView(),
+      onGenerateRoute: RouteGenerator.getRoute,
+      initialRoute: Routes.homeRoute,
     );
   }
 }
