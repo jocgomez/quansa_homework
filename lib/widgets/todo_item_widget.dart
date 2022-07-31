@@ -4,11 +4,13 @@ import 'package:quansa_homework/resources/asset_manager.dart';
 
 class TodoItemWidget extends StatelessWidget {
   final TodoItem todoItem;
+  final VoidCallback onTapDetail;
   final VoidCallback onDelete;
 
   const TodoItemWidget({
     Key? key,
     required this.todoItem,
+    required this.onTapDetail,
     required this.onDelete,
   }) : super(key: key);
 
@@ -17,12 +19,16 @@ class TodoItemWidget extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
 
     return ListTile(
-      leading: SizedBox(
-        width: size.width / 5,
-        child: FadeInImage.assetNetwork(
-          fit: BoxFit.fitHeight,
-          placeholder: AssetManager.loading,
-          image: todoItem.photoUrl,
+      onTap: onTapDetail,
+      leading: Hero(
+        tag: todoItem.id,
+        child: SizedBox(
+          width: size.width / 5,
+          child: FadeInImage.assetNetwork(
+            fit: BoxFit.fitHeight,
+            placeholder: AssetManager.loading,
+            image: todoItem.photoUrl,
+          ),
         ),
       ),
       title: Column(

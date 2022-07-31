@@ -112,6 +112,7 @@ class _HomeViewBodyState extends State<HomeViewBody> {
           TodoItem todo = viewModel.status.todoItems[index];
           return TodoItemWidget(
             todoItem: todo,
+            onTapDetail: () => viewModel.goToDetail(context, todo),
             onDelete: () => viewModel.showDialogDeleteTodo(todo.id),
           );
         },

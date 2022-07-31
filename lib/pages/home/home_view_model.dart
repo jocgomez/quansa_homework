@@ -8,6 +8,7 @@ import 'package:quansa_homework/data/services/storage_service.dart';
 import 'package:quansa_homework/domain/model/todo_item.dart';
 import 'package:quansa_homework/pages/home/home_effect.dart';
 import 'package:quansa_homework/pages/home/home_status.dart';
+import 'package:quansa_homework/resources/routes_manager.dart';
 import 'package:quansa_homework/view_model.dart';
 
 class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
@@ -113,5 +114,13 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
         todoItems: status.todoItems.where((item) => item.id != id).toList(),
       );
     }
+  }
+
+  void goToDetail(BuildContext context, TodoItem todoItem) {
+    Navigator.pushNamed(
+      context,
+      Routes.todoDetailRoute,
+      arguments: todoItem,
+    );
   }
 }
