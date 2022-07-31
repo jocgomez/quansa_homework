@@ -21,8 +21,7 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
 
   Future<void> onInit() async {
     /// Get the todos from local storage then are converted to List<TodoItem>
-    final String? todoItemsString =
-        _localStorage.getPreferences()?.getString('todos');
+    final String? todoItemsString = _localStorage.getString('todos');
 
     if (todoItemsString != null) {
       final List<dynamic> todoItemsMap = json.decode(todoItemsString);
@@ -74,21 +73,18 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
       addEffect(ShowDialogLoading());
       photoUrl = await _storageService.uploadFile(photo, todoItem.id);
       addEffect(CloseDialog());
-      todoItem = todoItem.copyWith(photoUrl: photoUrl);
     }
 
-    final List<TodoItem> todoItems = [
-      ...status.todoItems,
-      todoItem,
-    ];
+    final List<TodoItem> todoItems = List.of(status.todoItems);
+    todoItems.add(todoItem);
 
     /// save todo in local storage, the list is now an string
-    bool? saved = await _localStorage.getPreferences()?.setString(
-          'todos',
-          json.encode(todoItems.toList()),
-        );
+    bool? saved = await _localStorage.setString(
+      'todos',
+      json.encode(todoItems.toList()),
+    );
 
-    if (saved ?? false) {
+    if (saved) {
       status = status.copyWith(todoItems: todoItems);
     }
   }
@@ -103,13 +99,13 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
     final List<TodoItem> todoItems =
         status.todoItems.where((item) => item.id != id).toList();
 
-    bool? savedLocal = await _localStorage.getPreferences()?.setString(
-          'todos',
-          json.encode(todoItems.toList()),
-        );
+    bool? savedLocal = await _localStorage.setString(
+      'todos',
+      json.encode(todoItems.toList()),
+    );
 
     /// Update local state
-    if (savedLocal ?? false) {
+    if (savedLocal) {
       status = status.copyWith(
         todoItems: status.todoItems.where((item) => item.id != id).toList(),
       );

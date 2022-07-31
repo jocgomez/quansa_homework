@@ -4,7 +4,7 @@ part 'todo_item.g.dart';
 
 @JsonSerializable()
 class TodoItem {
-  final String id = DateTime.now().microsecondsSinceEpoch.toString();
+  late String id;
   final String title, description, photoUrl;
   final bool isDone;
 
@@ -13,7 +13,9 @@ class TodoItem {
     required this.description,
     required this.photoUrl,
     this.isDone = false,
-  });
+  }) {
+    id = DateTime.now().microsecondsSinceEpoch.toString();
+  }
 
   factory TodoItem.fromJson(Map<String, dynamic> json) =>
       _$TodoItemFromJson(json);

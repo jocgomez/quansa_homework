@@ -10,7 +10,15 @@ class LocalStorageService {
     return _instance;
   }
 
-  SharedPreferences? getPreferences() {
+  SharedPreferences? _getPreferences() {
     return _preferences;
+  }
+
+  String? getString(String key) {
+    return _getPreferences()?.getString(key);
+  }
+
+  Future<bool> setString(String key, String value) async {
+    return _getPreferences()?.setString(key, value) ?? Future(() => false);
   }
 }

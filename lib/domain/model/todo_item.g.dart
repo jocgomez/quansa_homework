@@ -11,9 +11,10 @@ TodoItem _$TodoItemFromJson(Map<String, dynamic> json) => TodoItem(
       description: json['description'] as String,
       photoUrl: json['photoUrl'] as String,
       isDone: json['isDone'] as bool? ?? false,
-    );
+    )..id = json['id'] as String;
 
 Map<String, dynamic> _$TodoItemToJson(TodoItem instance) => <String, dynamic>{
+      'id': instance.id,
       'title': instance.title,
       'description': instance.description,
       'photoUrl': instance.photoUrl,
