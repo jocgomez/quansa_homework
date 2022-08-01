@@ -116,6 +116,7 @@ class TodoDialog extends DialogBuilder {
                 onCreateTodo(
                   context,
                   TodoItem(
+                    id: DateTime.now().microsecondsSinceEpoch.toString(),
                     title: titleCtrl.text,
                     description: descriptionCtrl.text,
                     photoUrl: photo?.path ?? AssetManager.todoDefault,

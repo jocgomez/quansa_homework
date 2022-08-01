@@ -4,18 +4,17 @@ part 'todo_item.g.dart';
 
 @JsonSerializable()
 class TodoItem {
-  late String id;
+  final String id;
   final String title, description, photoUrl;
   final bool isDone;
 
   TodoItem({
+    required this.id,
     required this.title,
     required this.description,
     required this.photoUrl,
     this.isDone = false,
-  }) {
-    id = DateTime.now().microsecondsSinceEpoch.toString();
-  }
+  });
 
   factory TodoItem.fromJson(Map<String, dynamic> json) =>
       _$TodoItemFromJson(json);
@@ -23,12 +22,14 @@ class TodoItem {
   Map<String, dynamic> toJson() => _$TodoItemToJson(this);
 
   TodoItem copyWith({
+    String? id,
     String? title,
     String? description,
     String? photoUrl,
     bool? isDone,
   }) {
     return TodoItem(
+      id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
       photoUrl: photoUrl ?? this.photoUrl,

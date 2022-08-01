@@ -4,13 +4,13 @@ import 'package:quansa_homework/data/services/storage_service.dart';
 
 class TestStorageService implements StorageService {
   @override
-  Future<StorageService> initializeService() {
-    return Future.value(this);
+  Future<StorageService> initializeService() async {
+    return this;
   }
 
   @override
-  Future removeFile(String todoId) {
-    throw UnimplementedError();
+  Future removeFile(String todoId) async {
+    return true;
   }
 
   @override

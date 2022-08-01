@@ -1,10 +1,11 @@
 import 'package:quansa_homework/data/services/local_storage_service.dart';
 
 class TestLocalStorageService implements LocalStorageService {
+  /// Variable local poara probar el guardado de datos en local storage
   String? todoItems;
 
   static Future<TestLocalStorageService> getInstance() async {
-    return Future.value(TestLocalStorageService());
+    return TestLocalStorageService();
   }
 
   @override

@@ -33,6 +33,10 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
     }
   }
 
+  void clearTodos() {
+    status = status.copyWith(todoItems: []);
+  }
+
   /// Validación para textfields vacios
   String? validateEmptyForm(String? value) {
     if (value == null || value.isEmpty) {
@@ -73,6 +77,7 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
       addEffect(ShowDialogLoading());
       photoUrl = await _storageService.uploadFile(photo, todoItem.id);
       addEffect(CloseDialog());
+      todoItem = todoItem.copyWith(photoUrl: photoUrl);
     }
 
     final List<TodoItem> todoItems = List.of(status.todoItems);
