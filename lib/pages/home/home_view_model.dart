@@ -20,7 +20,7 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
   }
 
   Future<void> onInit() async {
-    /// Get the todos from local storage then are converted to List<TodoItem>
+    /// Se cargan las tareas desde LocalStorage y si hay las almacena
     final String? todoItemsString = _localStorage.getString('todos');
 
     if (todoItemsString != null) {
@@ -72,7 +72,7 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
   ) async {
     String? photoUrl;
 
-    /// Upload file to cloud storage
+    /// Subimos la imágen capturada a la nube
     if (photo != null) {
       addEffect(ShowDialogLoading());
       photoUrl = await _storageService.uploadFile(photo, todoItem.id);
@@ -83,7 +83,7 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
     final List<TodoItem> todoItems = List.of(status.todoItems);
     todoItems.add(todoItem);
 
-    /// save todo in local storage, the list is now an string
+    /// Guardamos la tarea en localstorage como un string
     bool? saved = await _localStorage.setString(
       'todos',
       json.encode(todoItems.toList()),
@@ -95,12 +95,12 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
   }
 
   Future<void> removeTodo(String id) async {
-    /// Remove file from cloud storage
+    /// Se elimina de la nube la imagen asociada a la tarea
     await _storageService.removeFile(
       status.todoItems.firstWhere((todo) => todo.id == id).photoUrl,
     );
 
-    /// Remove todoItem from local Storage
+    /// Se elimina del localstorage la tarea
     final List<TodoItem> todoItems =
         status.todoItems.where((item) => item.id != id).toList();
 
@@ -109,7 +109,7 @@ class HomeViewModel extends EffectsViewModel<HomeStatus, HomeEffect> {
       json.encode(todoItems.toList()),
     );
 
-    /// Update local state
+    /// Se actualiza el estado de la app
     if (savedLocal) {
       status = status.copyWith(
         todoItems: status.todoItems.where((item) => item.id != id).toList(),

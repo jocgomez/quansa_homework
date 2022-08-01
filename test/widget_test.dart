@@ -43,7 +43,7 @@ void main() async {
       /// Se valida que la tarea este en el estado
       int index = viewModel.status.todoItems
           .indexWhere((TodoItem item) => item.id == mockItem.id);
-      expect(index != -1, true);
+      expect(viewModel.status.todoItems.isNotEmpty && index != -1, true);
 
       /// Se valida que la tarea se guarde en LocalStorage
       viewModel.clearTodos();
