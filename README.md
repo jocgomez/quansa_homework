@@ -1,16 +1,14 @@
 # quansa_homework
 
-A new Flutter project.
+Proyecto de evaluación para la empresa Quansa.
 
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+Para este proyecto se utilizó una arquitectura MVVM con Effects junto a Provider como stateManagement y firebase storage como nube de almacenamiento para las fotografías subidas en la aplicación.
 
-A few resources to get you started if this is your first Flutter project:
+Al clonar el repositorio se debe abrir la terminal de comandos y escribir los siguientes comandos:
+1. > flutter clean
+2. > flutter pub get
+3. > flutter packages pub run build_runner build --delete-conflicting-outputs
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Lo siguiente es seleccionar un dispositivo para correr el proyecto, ya sea fisico o virtual (En emulador iOS, la camara no tiene funcionamiento) y se corre el proyecto.
